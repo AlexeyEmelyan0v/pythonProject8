@@ -1,0 +1,15 @@
+{% load static %}
+
+<h1>{{ director.name }}</h1>
+<h2>Дата рождения: {{ director.birth_date.date }}</h2>
+<img src="{% static director.image %}", width="300px">
+<h2>Участие в проектах:</h2>
+{% for anime in director.anime_set.all %}
+    <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
+{% endfor %}
+
+{% if perms.anime.change_director %}
+    <p>
+        <a href="{% url 'anime:update_director' director.pk %}">Изменить данные</a>
+    </p>
+{% endif %}

@@ -1,0 +1,20 @@
+{% load static %}
+
+<h1>{{anime.title}}</h1>
+<h3>Студия: {{anime.studio}}</h3>
+<h3>Режиссёр: <a href="{% url 'anime:director_info' anime.director.pk %}">{{ anime.director }}</a></h3>
+<h3>Дата релиза: {{anime.release_date.date}}</h3>
+<img src="{% static anime.image %}", width="300px">
+
+{% if user.is_authenticated %}
+    <h4><a href="{% url 'anime:add_to_my_list' anime.id user.id %}">Добавить в список просмотренных</a></h4>
+    <h4><a href="{% url 'anime:delete_from_my_list' anime.id user.id %}">Убрать из списка просмотренных</a></h4>
+{% else %}
+    <h4>Войдите, чтобы добавить в свой список просмотренных</h4>
+{% endif %}
+
+{% if perms.anime.change_anime %}
+    <p>
+        <a href="{% url 'anime:update_anime' anime.pk %}">Изменить данные</a>
+    </p>
+{% endif %}

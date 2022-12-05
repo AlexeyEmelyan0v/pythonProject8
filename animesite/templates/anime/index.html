@@ -1,0 +1,29 @@
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>Hi, {{ user.username }}! </p>
+        <p><a href="{% url 'logout' %}">Log out</a></p>
+    {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+    {% if object_list %}
+    <ul>
+        {% for anime in object_list %}
+            <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
+            <img src="{% static anime.image %}", width="300px">
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>Пусто.</p>
+    {% endif %}
+{% endblock content %}
+<h1>Мой список: </h1>
+{% if user.anime_set.all %}
+    {% for anime in user.anime_set.all %}
+        <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
+    {% endfor %}
+{% else %}
+    <p> Пусто </p>
+{% endif %}
