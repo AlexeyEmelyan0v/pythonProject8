@@ -25,6 +25,7 @@ class Anime(models.Model):
     release_date = models.DateTimeField('release_date')
     image = models.FileField(upload_to="", blank=True, null=True)
     viewers = models.ManyToManyField(User)
+    description = models.CharField(max_length=3000, null=True)
 
     def __str__(self):
         return self.title

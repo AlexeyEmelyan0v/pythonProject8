@@ -32,12 +32,12 @@ class AnimeDetailView(DetailView):
 class AnimeCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'anime.add_anime'
     model = Anime
-    fields = ['title', 'director', 'studio', 'release_date', 'image']
+    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description']
 
 class AnimeUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'anime.change_anime'
     model = Anime
-    fields = ['title', 'director', 'studio', 'release_date', 'image']
+    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description']
 
 class AnimeListView(ListView):
     model = Anime
