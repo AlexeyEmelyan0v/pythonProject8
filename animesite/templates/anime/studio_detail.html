@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h3 >Аниме студии {{ studio }}</h3>
+        {% for anime in studio.anime_set.all %}
+            <big><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></big>
+        {% endfor %}
+    </div>
+    {% if perms.anime.change_studio %}
+        <div class="container p-2">
+            <p><a class="btn btn-danger" href="{% url 'anime:update_studio' studio.pk %}">Изменить данные</a></p>
+        </div>
+    {% endif %}
+{% endblock %}

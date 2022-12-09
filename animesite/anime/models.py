@@ -24,8 +24,9 @@ class Anime(models.Model):
     studio = models.ForeignKey(Studio, on_delete=models.CASCADE)
     release_date = models.DateTimeField('release_date')
     image = models.FileField(upload_to="", blank=True, null=True)
-    viewers = models.ManyToManyField(User)
-    description = models.CharField(max_length=3000, null=True)
+    viewers = models.ManyToManyField(User, null=True, blank=True)
+    description = models.CharField(max_length=3000, blank=True, null=True)
+    link = models.CharField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return self.title

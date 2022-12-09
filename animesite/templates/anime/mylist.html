@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container p-3">
+        {% if user.is_authenticated %}
+            <h3>Список просмотренных</h3>
+            <h6>У вас в списке {{ user.anime_set.count }} аниме</h6>
+            <ol>
+                {% for anime in user.anime_set.all %}
+                    <big><li>
+                        <a class='text-decoration-none' href="{% url 'anime:anime_info' anime.pk %}">{{ anime }}</a>
+                    </li></big>
+                {% endfor %}
+            </ol>
+        {% else %}
+        <big><a href="{% url 'login' %}">Авторизируйтесь, чтобы посмотреть свой список просмотренных</a></big>
+        {% endif %}
+    </div>
+{% endblock %}

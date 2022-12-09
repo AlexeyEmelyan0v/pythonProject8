@@ -1,5 +1,14 @@
-<h2>Log in</h2>
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Log in</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container p-3">
+        <h2>Авторизация</h2>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Log in</button>
+        </form>
+        <div class="container p-2">
+            <a class="btn btn-dark" href="{% url 'users:signup' %}">Регистрация нового пользователя</a>
+        </div>
+    </div>
+{% endblock %}

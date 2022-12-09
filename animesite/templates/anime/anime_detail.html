@@ -2,22 +2,45 @@
 {% load static %}
 
 {% block content %}
-<h1>{{anime.title}}</h1>
-<p>Студия: {{anime.studio}}</p>
-<p>Режиссёр: <a href="{% url 'anime:director_info' anime.director.pk %}">{{ anime.director }}</a></p>
-<p>Дата релиза: {{anime.release_date.date}}</p>
-<img src="{% static anime.image %}", width="300px">
-<p>{{anime.description}}</p>
-{% if user.is_authenticated %}
-    <h4><a href="{% url 'anime:add_to_my_list' anime.id user.id %}">Добавить в список просмотренных</a></h4>
-    <h4><a href="{% url 'anime:delete_from_my_list' anime.id user.id %}">Убрать из списка просмотренных</a></h4>
-{% else %}
-    <h4><a href="{% url 'login' %}">Войдите, чтобы добавить в свой список просмотренных</a></h4>
-{% endif %}
-
-{% if perms.anime.change_anime %}
-    <p>
-        <a href="{% url 'anime:update_anime' anime.pk %}">Изменить данные</a>
-    </p>
-{% endif %}
-{% endblock content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="container p-4">
+                <img src="{% static anime.image %}", width="300px">
+                <div class="container p-2">
+                    {% if user.is_authenticated %}
+                        {% if anime in user.anime_set.all %}
+                           <p><a class="btn btn-primary" href="{% url 'anime:delete_from_my_list' anime.id user.id %}">Убрать из списка просмотренных</a></p>
+                        {% else %}
+                          <p><a class="btn btn-primary" href="{% url 'anime:add_to_my_list' anime.id user.id %}">Добавить в список просмотренных</a></p>
+                        {% endif %}
+                    {% else %}
+                        <p><a href="{% url 'login' %}">Войдите, чтобы добавить в свой список просмотренных</a></p>
+                    {% endif %}
+                    {% if perms.anime.change_anime %}
+                        <div class="container p-2">
+                            <p><a class="btn btn-danger" href="{% url 'anime:update_anime' anime.pk %}">Изменить данные</a></p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="container p-3">
+            <h1>{{anime.title}}</h1>
+                <div class="card p-2" style="width: 23rem">
+                    <p><big>Студия: <a href="{% url 'anime:studio_info' anime.studio.pk %}">{{anime.studio}}</a></big></p>
+                    <p><big>Режиссёр: <a href="{% url 'anime:director_info' anime.director.pk %}">{{ anime.director }}</a></big></p>
+                    <p><big>Дата релиза: {{anime.release_date.date}}</big></p>
+                    <p>В списке просмотренных у {{ anime.viewers.count }} пользователей</p>
+                </div>
+            <p>{{anime.description}}</p>
+                <div class="card">
+                    <h5 class="card-header">Трейлер</h5>
+                    <div class="card-body">
+                        <iframe width="640" height="360" src="{{ anime.link }}"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

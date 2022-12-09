@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h3>Все аниме</h3>
+    <ul>
+        {% for anime in object_list %}
+            <big><li><a class="text-decoration-none" href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></big>
+        {% endfor %}
+    </ul>
+    {% if perms.anime.add_anime %}
+        <a class="btn btn-danger" href="{% url 'anime:create_anime' %}">Добавить аниме</a>
+    {% endif %}
+    {% if perms.anime.add_director %}
+        <a class="btn btn-danger" href="{% url 'anime:create_director' %}">Добавить режиссёра</a>
+    {% endif %}
+    {% if perms.anime.add_studio %}
+        <a class="btn btn-danger" href="{% url 'anime:create_studio' %}">Добавить студию</a>
+    {% endif %}
+{% endblock %}

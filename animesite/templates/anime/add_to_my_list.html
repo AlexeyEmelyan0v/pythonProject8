@@ -1,2 +1,8 @@
-<h2>Аниме "{{ anime }}" успешно добавлено в ваш список.</h2>
-<a href="{% url 'anime:anime_info' anime.pk %}">Вернуться</a>
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container p-2">
+        <big>Аниме "{{ anime }}" успешно добавлено в ваш список.</big>
+        <p><a class="btn btn-primary" href="{% url 'anime:anime_info' anime.pk %}">Вернуться</a></p>
+    </div>
+{% endblock %}

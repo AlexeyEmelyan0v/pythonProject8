@@ -14,4 +14,9 @@ urlpatterns = [
     path('director/<int:pk>/update/', views.DirectorUpdateView.as_view(), name='update_director'),
     path('anime/<int:anime_id>/add_to_my_list/<int:user_id>/', views.AddToMyList, name='add_to_my_list'),
     path('anime/<int:anime_id>/delete_from_my_list/<int:user_id>/', views.DeleteFromMyList, name='delete_from_my_list'),
+    path('anime/mylist', views.mylist, name='mylist'),
+    path('studio/<int:pk>/', views.StudioDetailView.as_view(), name='studio_info'),
+    path('studio/create/', views.StudioCreateView.as_view(), name='create_studio'),
+    path('studio/<int:pk>/update/', views.StudioUpdateView.as_view(), name='update_studio'),
+    path('anime/all', views.AnimeAllListView.as_view(), name='all_anime'),
 ]

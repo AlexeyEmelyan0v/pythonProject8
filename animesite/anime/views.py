@@ -9,7 +9,21 @@ from .models import Anime, Director, Studio
 from django.template import loader
 
 def index(request) :
-    return HttpResponse("Список аниме")
+    return HttpResponse("<h1>Лучший сайт</h1>")
+
+class StudioDetailView(DetailView):
+    model = Studio
+    template_name = 'anime/studio_detail.html'
+
+class StudioUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'anime.change_studio'
+    model = Studio
+    fields = ['name']
+
+class StudioCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'anime.add_studio'
+    model = Studio
+    fields = ['name']
 
 class DirectorDetailView(DetailView):
     model = Director
@@ -32,12 +46,12 @@ class AnimeDetailView(DetailView):
 class AnimeCreateView(PermissionRequiredMixin, CreateView):
     permission_required = 'anime.add_anime'
     model = Anime
-    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description']
+    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description', 'link']
 
 class AnimeUpdateView(PermissionRequiredMixin, UpdateView):
     permission_required = 'anime.change_anime'
     model = Anime
-    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description']
+    fields = ['title', 'director', 'studio', 'release_date', 'image', 'description', 'link']
 
 class AnimeListView(ListView):
     model = Anime
@@ -45,7 +59,14 @@ class AnimeListView(ListView):
     paginate_by = 5
 
     def get_ordering(self):
-        return '-release_date'
+        return 'title'
+
+class AnimeAllListView(ListView):
+    model = Anime
+    template_name = 'anime/anime_all.html'
+
+    def get_ordering(self):
+        return 'title'
 
 def AddToMyList(request, anime_id, user_id):
     user = User.objects.get(id=user_id)
@@ -59,6 +80,9 @@ def DeleteFromMyList(request, anime_id, user_id):
     anime = Anime.objects.get(id=anime_id)
     anime.viewers.remove(user)
     return render(request, 'anime/delete_from_my_list.html', {'anime' : anime})
+
+def mylist(request):
+    return render(request, 'anime/mylist.html')
 
 
 # Create your views here.

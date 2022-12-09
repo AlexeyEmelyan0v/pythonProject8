@@ -3,24 +3,22 @@
 
 {% block content %}
     {% if object_list %}
-    <ul>
-        {% for anime in object_list %}
-            <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
-            <img src="{% static anime.image %}", width="300px">
-        {% endfor %}
-    </ul>
+        <ul>
+            {% for anime in object_list %}
+                <h3><li><a class="text-decoration-none" href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h3>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <img src="{% static anime.image %}" , width="250px">
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="card p-3">
+                            <p>{{anime.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
     {% else %}
         <p>Пусто.</p>
     {% endif %}
-
-<h1>Мой список: </h1>
-{% if user.anime_set.all %}
-    <ul>
-    {% for anime in user.anime_set.all %}
-        <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p> Пусто </p>
-{% endif %}
-{% endblock content %}
+{% endblock %}

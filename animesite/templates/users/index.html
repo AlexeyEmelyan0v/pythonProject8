@@ -1,7 +1,12 @@
-{% for user in object_list %}
-    <li>
-        {{ user }}
-    </li>
-{% empty %}
-    Пусто.
-{% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container p-3">
+        <h3>Список всех пользователей:</h3>
+        {% for user in object_list %}
+            <p><li>{{ user }}</li></p>
+        {% empty %}
+            Пусто.
+        {% endfor %}
+    </div>
+{% endblock %}

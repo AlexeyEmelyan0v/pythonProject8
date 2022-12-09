@@ -1,17 +1,24 @@
-<div class="row">
-    <div class="col-sm-9">
-        <div class="card">
-            <h1><a href="{% url 'anime:anime_list' %}" class="card-title">Animesite</a></h1>
+<div class="card bg-info p-2">
+    <div class="row">
+        <div class="col-sm-3">
+            <h1><a class="link-dark text-decoration-none" href="{% url 'anime:anime_list' %}" >Animesite</a></h1>
         </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="card">
+        <div class="col-sm-2">
+            <h5><a class="link-dark text-decoration-none" href="{% url 'anime:all_anime' %}">Все аниме</a></h5>
+        </div>
+        <div class="col-sm-2">
+            <h5><a class="link-dark text-decoration-none" href="{% url 'anime:mylist' %}">Мой список</a></h5>
+        </div>
+        <div class="col-sm-2">
+            <h5><a class="link-dark text-decoration-none" href="{% url 'users:users_list' %}">Список пользователей</a></h5>
+        </div>
+        <div class="col-sm-3">
             {% if user.is_authenticated %}
-                <p class="card-title">Hi, {{user.username }}</p>
-                <a href="{% url 'logout' %}" class="card-link">Log Out</a>
+                <h5 class="card-title">Hi, {{user.username }}</h5>
+                <a href="{% url 'logout' %}" class="link-dark">Log Out</a>
             {% else %}
                 <p class="card-title">You are not logged in.</p>
-                <a href="{% url 'login' %}" class="card-link">Log In</a>
+                <a href="{% url 'login' %}" class="link-dark">Log In</a>
             {% endif %}
         </div>
     </div>

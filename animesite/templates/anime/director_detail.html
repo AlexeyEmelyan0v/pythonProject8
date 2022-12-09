@@ -1,15 +1,27 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<h1>{{ director.name }}</h1>
-<h2>Дата рождения: {{ director.birth_date.date }}</h2>
-<img src="{% static director.image %}", width="300px">
-<h2>Участие в проектах:</h2>
-{% for anime in director.anime_set.all %}
-    <h2><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h2>
-{% endfor %}
-
-{% if perms.anime.change_director %}
-    <p>
-        <a href="{% url 'anime:update_director' director.pk %}">Изменить данные</a>
-    </p>
-{% endif %}
+{% block content %}
+    <div class="row">
+        <h2>{{ director.name }}</h2>
+        <p>Дата рождения: {{ director.birth_date.date }}</p>
+        <div class="col-sm-4">
+            <img src="{% static director.image %}", width="300px">
+        </div>
+        <div class="col-sm-7">
+            <div class="card">
+                <h4 class="card-header">Участие в проектах:</h4>
+                <div class="card-body">
+                {% for anime in director.anime_set.all %}
+                    <h5><li><a href="{% url 'anime:anime_info' anime.id %}">{{ anime.title }}</a></li></h5>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if perms.anime.change_director %}
+        <div class="container p-2">
+            <p><a class="btn btn-danger" href="{% url 'anime:update_director' director.pk %}">Изменить данные</a></p>
+        </div>
+    {% endif %}
+{% endblock %}
