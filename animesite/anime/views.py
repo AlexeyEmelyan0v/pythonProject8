@@ -9,7 +9,7 @@ from .models import Anime, Director, Studio
 from django.template import loader
 
 def index(request) :
-    return HttpResponse("<h1>Лучший сайт</h1>")
+    return render(request, 'home.html')
 
 class StudioDetailView(DetailView):
     model = Studio
